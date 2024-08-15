@@ -1,4 +1,4 @@
-import { AdapterAccountType } from "@auth/core/adapters"
+import { AdapterAccountType } from "@auth/core/adapters";
 import {
   boolean,
   timestamp,
@@ -6,9 +6,8 @@ import {
   text,
   primaryKey,
   integer,
-} from "drizzle-orm/pg-core"
+} from "drizzle-orm/pg-core";
 
- 
 export const users = pgTable("user", {
   id: text("id")
     .primaryKey()
@@ -17,7 +16,8 @@ export const users = pgTable("user", {
   email: text("email").unique(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
-})
+  isPremium: boolean("isPremium").$defaultFn(() => false),
+});
 export const accounts = pgTable(
   "account",
   {
@@ -40,16 +40,16 @@ export const accounts = pgTable(
       columns: [account.provider, account.providerAccountId],
     }),
   })
-)
- 
+);
+
 export const sessions = pgTable("session", {
   sessionToken: text("sessionToken").primaryKey(),
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
-})
- 
+});
+
 export const verificationTokens = pgTable(
   "verificationToken",
   {
@@ -62,8 +62,8 @@ export const verificationTokens = pgTable(
       columns: [verificationToken.identifier, verificationToken.token],
     }),
   })
-)
- 
+);
+
 export const authenticators = pgTable(
   "authenticator",
   {
@@ -83,4 +83,4 @@ export const authenticators = pgTable(
       columns: [authenticator.userId, authenticator.credentialID],
     }),
   })
-)
+);
