@@ -2,15 +2,24 @@
 
 import { useCheckPremium } from "@/src/payments/use-check-premium";
 import { PaymentButton } from "./payment";
+import { useSignedUrl } from "@/src/video/use-signed-url";
 
 export const VideoPlayer = () => {
   const { data: isPremium, isPending, isError, error } = useCheckPremium();
 
-  if (isPending) {
+  const {
+    data: signedUrl,
+    isPending: isSignedUrlPending,
+    error: signedUrlError,
+  } = useSignedUrl(
+    "https://iframe.mediadelivery.net/embed/288439/d1b2eccc-3621-4d86-ab84-4bd29780b2a4"
+  );
+
+  if (isPending || isSignedUrlPending) {
     return <div>Loading...</div>;
   }
 
-  if (isError) {
+  if (isError || signedUrlError) {
     return <div>Error: {error?.message}</div>;
   }
 
@@ -23,11 +32,11 @@ export const VideoPlayer = () => {
     );
   }
 
+  console.log("signedUrl", signedUrl);
+
   return (
     <iframe
-      src={
-        "https://iframe.mediadelivery.net/play/288439/d1b2eccc-3621-4d86-ab84-4bd29780b2a4"
-      }
+      src={(signedUrl?.data as string) ?? ""}
       loading="lazy"
       style={{
         border: 0,
