@@ -6,22 +6,35 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db-generate": "bun x drizzle-kit generate",
+    "db-migrate": "bun x drizzle-kit migrate",
+    "db-studio": "bun x drizzle-kit studio"
   },
   "dependencies": {
+    "@auth/core": "^0.34.2",
+    "@auth/drizzle-adapter": "^1.4.2",
+    "@neondatabase/serverless": "^0.9.4",
+    "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.33.0",
     "lucide-react": "^0.427.0",
     "next": "14.2.5",
+    "next-auth": "^5.0.0-beta.20",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.5.2",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "drizzle-kit": "^0.24.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "postcss": "^8",
